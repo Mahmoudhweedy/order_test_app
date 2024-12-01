@@ -24,78 +24,80 @@ class OrdersChartScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: dataPoints.isNotEmpty
-                ? Expanded(
-                    child: LineChart(
-                      LineChartData(
-                        borderData: FlBorderData(show: false),
-                        gridData: FlGridData(
-                          show: true,
-                          getDrawingHorizontalLine: (value) => FlLine(
-                            color: Colors.grey.withOpacity(0.5),
-                            strokeWidth: .5,
-                          ),
-                          getDrawingVerticalLine: (value) => FlLine(
-                            color: Colors.grey.withOpacity(0.5),
-                            strokeWidth: .5,
+                ? LineChart(
+                    LineChartData(
+                      borderData: FlBorderData(show: false),
+                      gridData: FlGridData(
+                        show: true,
+                        getDrawingHorizontalLine: (value) => FlLine(
+                          color: Colors.grey.withOpacity(0.5),
+                          strokeWidth: .5,
+                        ),
+                        getDrawingVerticalLine: (value) => FlLine(
+                          color: Colors.grey.withOpacity(0.5),
+                          strokeWidth: .5,
+                        ),
+                      ),
+                      titlesData: FlTitlesData(
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1,
+                            getTitlesWidget: (value, meta) {
+                              return Text(
+                                value.toInt().toString(),
+                                style: const TextStyle(
+                                  color: Colors.teal,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            },
+                            reservedSize: 40,
                           ),
                         ),
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              interval: 1,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
-                                  value.toInt().toString(),
-                                  style: const TextStyle(
-                                    color: Colors.teal,
-                                    fontWeight: FontWeight.bold,
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: (value, meta) {
+                              final index = value.toInt();
+                              if (index >= 0 && index < sortedKeys.length) {
+                                return Transform.rotate(
+                                  angle: -.7,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '${sortedKeys[index].day}/${sortedKeys[index].month}',
+                                    style: const TextStyle(
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 );
-                              },
-                              reservedSize: 40,
-                            ),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (value, meta) {
-                                final index = value.toInt();
-                                if (index >= 0 && index < sortedKeys.length) {
-                                  return Transform.rotate(
-                                    angle: -.7,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      '${sortedKeys[index].day}/${sortedKeys[index].month}',
-                                      style: const TextStyle(
-                                        color: Colors.teal,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return const Text('');
-                              },
-                              reservedSize: 40,
-                            ),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
+                              }
+                              return const Text('');
+                            },
+                            reservedSize: 40,
                           ),
                         ),
-                        minY: 0,
-                        lineBarsData: [
-                          LineChartBarData(
-                            isCurved: true,
-                            color: Colors.teal,
-                            dotData: const FlDotData(show: true),
-                            spots: dataPoints,
-                          ),
-                        ],
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                       ),
+                      minY: 0,
+                      lineBarsData: [
+                        LineChartBarData(
+                          isCurved: true,
+                          color: Colors.teal,
+                          dotData: const FlDotData(show: true),
+                          spots: dataPoints,
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: Colors.teal.withOpacity(0.3),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : const Center(

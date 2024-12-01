@@ -8,7 +8,6 @@ class MetricCard extends StatelessWidget {
     required this.icon,
     required this.color,
   });
-
   final String title;
   final String value;
   final IconData icon;
@@ -16,6 +15,9 @@ class MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.25,
+      margin: const EdgeInsets.all(8),
+      height: 150,
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
@@ -30,15 +32,18 @@ class MetricCard extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 40),
             const SizedBox(width: 16),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
@@ -47,6 +52,7 @@ class MetricCard extends StatelessWidget {
                 ),
                 Text(
                   value,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 24,
                     color: Colors.black87,
